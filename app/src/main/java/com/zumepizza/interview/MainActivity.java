@@ -7,15 +7,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/*
- Exercise instructions
 
- 1) Fetch menu data using the URL given in API.java.
- 2) Use fetched data to instantiate product model objects.
- 3) Using product models, populate a list view using designs found in mocks/menu-mock-up.png
-
- */
-
+// * See "Instructions" text file
 
 public class MainActivity extends AppCompatActivity {
 

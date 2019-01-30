@@ -1,5 +1,17 @@
- Exercise instructions
+Exercise instructions
 
- 1) Fetch menu data using the URL given in API.m.
- 2) Use fetched data to instantiate product models.
- 3) Using product models, populate a table view using designs found in menu-mock-up.png
+1) Create a screen with a list containing categories and their pizzas.
+2) If a pizza is classified as spicy or vegetarian, be sure to display that information.
+3) Place a cart icon in the app bar on this screen and update cart count when the user adds a pizza to the cart.
+4) When the user clicks on a pizza, they should be taken to a screen that displays pizza details.This screen should also include an add to cart button.
+5) When the user clicks the add button on the Pizza Details screen, the user should return to the previous screen, where the row containing that pizza should now reflect that there is N of that item in the cart.
+6) 5 should also update the cart count on the main screen.
+
+Optional features:
+• Add UI and unit tests for the use cases above.
+
+Additional information about this take-home:
+• Free to use popular third party libraries.
+• URL to get pizza list: https://api.myjson.com/bins/snyji
+
+You have 3 days to complete this code challenge.

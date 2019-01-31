@@ -43,8 +43,7 @@ public class API {
                         try {
                             JSONArray json = new JSONArray(response);
                             responseHandler.completion(json);
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             Log.d("API", "JSON conversion error: " + e.getLocalizedMessage());
                         }
                     }

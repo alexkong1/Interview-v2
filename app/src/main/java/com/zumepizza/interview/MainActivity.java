@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 // * See "Instructions" text file
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PizzaAdapter.PizzaSelectionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.main_container, MainFragment.newInstance())
+                .commit();
+    }
+
+    @Override
+    public void selectPizza(JSONObject pizza) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, PizzaDetailsFragment.newInstance(pizza))
+                .addToBackStack(null)
                 .commit();
     }
 }

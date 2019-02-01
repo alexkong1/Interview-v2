@@ -49,6 +49,7 @@ public class MainFragment extends Fragment implements API.ResponseHandler {
     @Override
     public void completion(JSONArray response) {
         Log.e("PIZZAS", response.toString());
-        recyclerView.setAdapter(new PizzaAdapter(getContext(), response));
+        recyclerView.setAdapter(new PizzaAdapter(getContext(),
+                (PizzaAdapter.PizzaSelectionListener) getActivity(),response));
     }
 }

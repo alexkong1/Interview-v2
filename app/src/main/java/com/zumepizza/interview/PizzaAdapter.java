@@ -20,9 +20,11 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.ViewHolder> 
 
     private JSONArray response;
     private Context context;
+    private PizzaSelectionListener listener;
 
-    public PizzaAdapter(Context context, JSONArray response) {
+    public PizzaAdapter(Context context, PizzaSelectionListener listener, JSONArray response) {
         this.context = context;
+        this.listener = listener;
         this.response = response;
     }
 
@@ -38,6 +40,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.ViewHolder> 
             viewHolder.pizzaPrice.setText(
                     String.format(context.getString(R.string.price), object.getString("price")));
 
+            viewHolder.itemView.setOnClickListener(view -> listener.selectPizza(object));
             viewHolder.pizzaAddRemove.setOnClickListener(view -> {
 
             });
@@ -95,5 +98,9 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.ViewHolder> 
             pizzaSpicy = itemView.findViewById(R.id.pizza_spicy);
             pizzaVeg = itemView.findViewById(R.id.pizza_veg);
         }
+    }
+
+    interface PizzaSelectionListener {
+        void selectPizza(JSONObject pizza);
     }
 }

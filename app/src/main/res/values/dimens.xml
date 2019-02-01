@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pizza_size">120dp</dimen>
+    <dimen name="pizza_add_remove_size">60dp</dimen>
+    <dimen name="pizza_type_size">26dp</dimen>
+</resources>

@@ -45,10 +45,10 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.ViewHolder> 
 
             });
 
-            if (object.getInt("vegetarian") == 1) viewHolder.pizzaVeg.setVisibility(View.VISIBLE);
+            if (object.optInt("vegetarian", 0) == 1) viewHolder.pizzaVeg.setVisibility(View.VISIBLE);
             else viewHolder.pizzaVeg.setVisibility(View.GONE);
 
-            if (object.getInt("spicy") == 1) viewHolder.pizzaSpicy.setVisibility(View.VISIBLE);
+            if (object.optInt("spicy", 0) == 1) viewHolder.pizzaSpicy.setVisibility(View.VISIBLE);
             else viewHolder.pizzaSpicy.setVisibility(View.GONE);
 
             String toppingsString = "";

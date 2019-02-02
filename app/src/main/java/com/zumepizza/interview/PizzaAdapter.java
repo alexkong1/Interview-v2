@@ -85,6 +85,12 @@ public class PizzaAdapter extends StatelessSection {
         }
 
         viewHolder.pizzaToppings.setText(toppingsString);
+
+        int numInCart = listener.getNumInCart(pizza.getId());
+        if (numInCart > 0) {
+            viewHolder.pizzaNum.setVisibility(View.VISIBLE);
+            viewHolder.pizzaNum.setText(String.format(context.getString(R.string.num_in_cart), numInCart));
+        } else viewHolder.pizzaNum.setVisibility(View.GONE);
     }
 
     class PizzaViewHolder extends RecyclerView.ViewHolder {
@@ -121,5 +127,6 @@ public class PizzaAdapter extends StatelessSection {
 
     interface PizzaSelectionListener {
         void selectPizza(Pizza pizza);
+        int getNumInCart(int id);
     }
 }

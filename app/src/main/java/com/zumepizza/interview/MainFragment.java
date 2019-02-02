@@ -64,4 +64,7 @@ public class MainFragment extends Fragment implements API.ResponseHandler {
         recyclerView.setAdapter(adapter);
     }
 
+    public void updateNumInCart() {
+        if (recyclerView.getAdapter() != null) recyclerView.getAdapter().notifyDataSetChanged();
+    }
 }

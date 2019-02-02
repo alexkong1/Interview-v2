@@ -1,10 +1,9 @@
 package com.zumepizza.interview;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-
-import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.zumepizza.interview.model.Pizza;
-
-import org.json.JSONObject;
 
 
 // * See "Instructions" text file
@@ -23,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements PizzaAdapter.Pizz
 
     private TextView cartBadge;
     private int cartItemCount = 0;
+    private SparseIntArray mCartMap = new SparseIntArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements PizzaAdapter.Pizz
     }
 
     private void initializeUi() {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_container, MainFragment.newInstance(), "main")
-                    .commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, MainFragment.newInstance(), "main")
+                .commit();
     }
 
     @Override
@@ -63,20 +61,30 @@ public class MainActivity extends AppCompatActivity implements PizzaAdapter.Pizz
     }
 
     @Override
-    public void addPizza() {
+    public void addPizza(int id) {
         cartItemCount++;
         setupBadge();
+        if (mCartMap.get(id) == 0) mCartMap.append(id, 1);
+        else mCartMap.put(id, mCartMap.get(id) + 1);
         getSupportFragmentManager().popBackStack();
+        if (getSupportFragmentManager().findFragmentByTag("main") != null)
+            ((MainFragment) getSupportFragmentManager().findFragmentByTag("main")).updateNumInCart();
     }
 
     private void setupBadge() {
         if (cartBadge != null) {
-            if (cartItemCount == 0 && cartBadge.getVisibility() != View.GONE) cartBadge.setVisibility(View.GONE);
+            if (cartItemCount == 0 && cartBadge.getVisibility() != View.GONE)
+                cartBadge.setVisibility(View.GONE);
             else {
                 cartBadge.setText(String.valueOf(Math.min(cartItemCount, 99)));
                 if (cartBadge.getVisibility() != View.VISIBLE)
                     cartBadge.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    @Override
+    public int getNumInCart(int id) {
+        return mCartMap.get(id);
     }
 }

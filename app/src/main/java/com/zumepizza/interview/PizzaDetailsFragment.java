@@ -61,7 +61,7 @@ public class PizzaDetailsFragment extends Fragment {
 
             if (getActivity() != null)
                 root.findViewById(R.id.details_add).setOnClickListener(view ->
-                        ((AddPizzaListener) getActivity()).addPizza());
+                        ((AddPizzaListener) getActivity()).addPizza(pizza.getId()));
 
             ((TextView) root.findViewById(R.id.details_name)).setText(pizza.getName());
 
@@ -125,6 +125,6 @@ public class PizzaDetailsFragment extends Fragment {
     }
 
     interface AddPizzaListener {
-        void addPizza();
+        void addPizza(int id);
     }
 }

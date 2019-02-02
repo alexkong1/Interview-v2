@@ -62,9 +62,6 @@ public class MainFragment extends Fragment implements API.ResponseHandler {
         }
 
         recyclerView.setAdapter(adapter);
-
-//        recyclerView.setAdapter(new PizzaAdapter(getContext(),
-//                (PizzaAdapter.PizzaSelectionListener) getActivity(), response));
     }
 
 }

@@ -3,9 +3,7 @@ package com.zumepizza.interview;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -70,17 +68,14 @@ public class PizzaAdapter extends StatelessSection {
                 String.format(context.getString(R.string.price), pizza.getPrice()));
 
         viewHolder.itemView.setOnClickListener(view -> listener.selectPizza(pizza));
-        viewHolder.pizzaAddRemove.setOnClickListener(view -> {
-
-        });
 
         if (pizza.getClassifications() != null && pizza.getClassifications().isVegetarian())
             viewHolder.pizzaVeg.setVisibility(View.VISIBLE);
         else viewHolder.pizzaVeg.setVisibility(View.GONE);
 
         if (pizza.getClassifications() != null && pizza.getClassifications().isGlutenFree())
-            viewHolder.pizzaSpicy.setVisibility(View.VISIBLE);
-        else viewHolder.pizzaSpicy.setVisibility(View.GONE);
+            viewHolder.pizzaGlutenFree.setVisibility(View.VISIBLE);
+        else viewHolder.pizzaGlutenFree.setVisibility(View.GONE);
 
         String toppingsString = "";
         List<Pizza.Topping> toppings = pizza.getToppings();
@@ -99,8 +94,8 @@ public class PizzaAdapter extends StatelessSection {
         TextView pizzaName;
         TextView pizzaPrice;
         ImageView pizzaVeg;
-        ImageView pizzaSpicy;
-        ImageView pizzaAddRemove;
+        ImageView pizzaGlutenFree;
+        TextView pizzaNum;
 
         public PizzaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -108,9 +103,9 @@ public class PizzaAdapter extends StatelessSection {
             pizzaToppings = itemView.findViewById(R.id.pizza_toppings);
             pizzaName = itemView.findViewById(R.id.pizza_name);
             pizzaPrice = itemView.findViewById(R.id.pizza_price);
-            pizzaAddRemove = itemView.findViewById(R.id.pizza_add_remove);
-            pizzaSpicy = itemView.findViewById(R.id.pizza_spicy);
+            pizzaGlutenFree = itemView.findViewById(R.id.pizza_gluten_free);
             pizzaVeg = itemView.findViewById(R.id.pizza_veg);
+            pizzaNum = itemView.findViewById(R.id.pizza_num);
         }
     }
 

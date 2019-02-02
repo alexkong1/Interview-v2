@@ -14,17 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.zumepizza.interview.model.Pizza;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 public class PizzaDetailsFragment extends Fragment {
+
+    public static final String ARGS_PIZZA = "pizza";
 
     public static PizzaDetailsFragment newInstance(String pizzaJson) {
         PizzaDetailsFragment fragment = new PizzaDetailsFragment();
         Bundle args = new Bundle();
-        args.putString("pizza", pizzaJson);
+        args.putString(ARGS_PIZZA, pizzaJson);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,45 +47,42 @@ public class PizzaDetailsFragment extends Fragment {
     private void initializeUi(View root) {
 
         if (getArguments() != null) {
-            try {
-                JSONObject pizza = new JSONObject(getArguments().getString("pizza"));
+            Pizza pizza = new Gson().fromJson(getArguments().getString(ARGS_PIZZA), Pizza.class);
 
-                RecyclerView recyclerView = root.findViewById(R.id.details_ingredients_recycler);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(new ToppingsAdapter(getContext(), pizza.getJSONArray("toppings")));
+            RecyclerView recyclerView = root.findViewById(R.id.details_toppings_recycler);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(new ToppingsAdapter(getContext(), pizza.getToppings()));
 
-                ImageView imageView = root.findViewById(R.id.details_image);
-                if (getContext() != null)
-                    Glide.with(getContext())
-                            .load(pizza.getJSONObject("menuAsset").getString("url"))
-                            .into(imageView);
+            ImageView imageView = root.findViewById(R.id.details_image);
+            if (getContext() != null)
+                Glide.with(getContext())
+                        .load(pizza.getAssets().getProductDetailsPage().get(0).getUrl())
+                        .into(imageView);
 
-                if (getActivity() != null)
-                    root.findViewById(R.id.details_add).setOnClickListener(view ->
-                            ((AddPizzaListener) getActivity()).addPizza());
+            if (getActivity() != null)
+                root.findViewById(R.id.details_add).setOnClickListener(view ->
+                        ((AddPizzaListener) getActivity()).addPizza());
 
-                ((TextView) root.findViewById(R.id.details_name)).setText(pizza.getString("name"));
+            ((TextView) root.findViewById(R.id.details_name)).setText(pizza.getName());
 
-                if (pizza.optInt("vegetarian", 0) == 1) root.findViewById(R.id.details_veg).setVisibility(View.VISIBLE);
-                else root.findViewById(R.id.details_veg).setVisibility(View.GONE);
+            if (pizza.getClassifications() != null && pizza.getClassifications().isGlutenFree())
+                root.findViewById(R.id.details_gluten_free).setVisibility(View.VISIBLE);
+            else root.findViewById(R.id.details_gluten_free).setVisibility(View.GONE);
 
-                if (pizza.optInt("spicy", 0) == 1) root.findViewById(R.id.details_spicy).setVisibility(View.VISIBLE);
-                else root.findViewById(R.id.details_spicy).setVisibility(View.GONE);
+            if (pizza.getClassifications() != null && pizza.getClassifications().isVegetarian())
+                root.findViewById(R.id.details_veg).setVisibility(View.VISIBLE);
+            else root.findViewById(R.id.details_veg).setVisibility(View.GONE);
 
-                ((TextView) root.findViewById(R.id.details_name)).setText(pizza.getString("menu_description"));
-
-            } catch (JSONException e) {
-
-            }
+            ((TextView) root.findViewById(R.id.details_description)).setText(pizza.getMenuDescription());
         }
     }
 
     class ToppingsAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-        private JSONArray toppings;
+        private List<Pizza.Topping> toppings;
         private Context context;
 
-        ToppingsAdapter(Context context, JSONArray toppings) {
+        ToppingsAdapter(Context context, List<Pizza.Topping> toppings) {
             this.context = context;
             this.toppings = toppings;
         }
@@ -97,23 +96,18 @@ public class PizzaDetailsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-            try {
-                JSONObject topping = toppings.getJSONObject(viewHolder.getAdapterPosition());
+            Pizza.Topping topping = toppings.get(viewHolder.getAdapterPosition());
 
-                Glide.with(context)
-                        .load(topping.getJSONObject("asset").getString("url"))
-                        .into(viewHolder.ingredientBackground);
+            Glide.with(context)
+                    .load(topping.getAsset().getUrl())
+                    .into(viewHolder.ingredientBackground);
 
-                viewHolder.ingredientName.setText(topping.getString("name"));
-
-            } catch (JSONException e) {
-
-            }
+            viewHolder.ingredientName.setText(topping.getName());
         }
 
         @Override
         public int getItemCount() {
-            return toppings.length();
+            return toppings.size();
         }
     }
 

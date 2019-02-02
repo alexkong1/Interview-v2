@@ -8,14 +8,56 @@
     <ImageView
         android:id="@+id/details_image"
         android:layout_width="@dimen/pizza_size"
-        android:layout_height="@dimen/pizza_size" />
+        android:layout_height="@dimen/pizza_size"
+        android:layout_margin="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/details_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NAME"
+        android:textSize="26sp"
+        app:layout_constraintLeft_toRightOf="@id/details_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/details_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DESCRIPTION"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/details_image"
+        app:layout_constraintTop_toBottomOf="@id/details_name" />
+
+    <ImageView
+        android:id="@+id/details_spicy"
+        android:layout_width="@dimen/pizza_type_size"
+        android:layout_height="@dimen/pizza_type_size"
+        android:padding="4dp"
+        android:src="@drawable/spicy"
+        app:layout_constraintLeft_toRightOf="@id/details_name"
+        app:layout_constraintTop_toTopOf="@id/details_name"
+        app:layout_constraintBottom_toBottomOf="@id/details_name"/>
+
+    <ImageView
+        android:id="@+id/details_veg"
+        android:layout_width="@dimen/pizza_type_size"
+        android:layout_height="@dimen/pizza_type_size"
+        android:padding="4dp"
+        android:src="@drawable/vegetarian"
+        app:layout_constraintLeft_toRightOf="@id/details_spicy"
+        app:layout_constraintTop_toTopOf="@id/details_name"
+        app:layout_constraintBottom_toBottomOf="@id/details_name"/>
 
     <ImageView
         android:id="@+id/details_add"
         android:layout_width="@dimen/pizza_add_remove_size"
         android:layout_height="@dimen/pizza_add_remove_size"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintLeft_toRightOf="@id/details_image" />
+        android:src="@drawable/add_pizza"
+        app:layout_constraintLeft_toRightOf="@id/details_image"
+        app:layout_constraintTop_toBottomOf="@id/details_description" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/details_ingredients_recycler"

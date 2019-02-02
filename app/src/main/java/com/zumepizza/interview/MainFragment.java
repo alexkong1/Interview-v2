@@ -1,6 +1,5 @@
 package com.zumepizza.interview;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.json.JSONArray;
+import com.zumepizza.interview.model.Pizza;
+
+import java.util.List;
+import java.util.Map;
+
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class MainFragment extends Fragment implements API.ResponseHandler {
 
@@ -47,9 +51,20 @@ public class MainFragment extends Fragment implements API.ResponseHandler {
     }
 
     @Override
-    public void completion(JSONArray response) {
+    public void completion(Map<String, List<Pizza>> response) {
         Log.e("PIZZAS", response.toString());
-        recyclerView.setAdapter(new PizzaAdapter(getContext(),
-                (PizzaAdapter.PizzaSelectionListener) getActivity(),response));
+
+        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
+
+        for(String key : response.keySet()) {
+            adapter.addSection(new PizzaAdapter(getContext(),
+                    (PizzaAdapter.PizzaSelectionListener) getActivity(), key, response.get(key)));
+        }
+
+        recyclerView.setAdapter(adapter);
+
+//        recyclerView.setAdapter(new PizzaAdapter(getContext(),
+//                (PizzaAdapter.PizzaSelectionListener) getActivity(), response));
     }
+
 }

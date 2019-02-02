@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.zumepizza.interview.model.Pizza;
+
 import org.json.JSONObject;
 
 
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements PizzaAdapter.Pizz
     }
 
     private void initializeUi() {
-
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_container, MainFragment.newInstance(), "main")
@@ -52,11 +54,11 @@ public class MainActivity extends AppCompatActivity implements PizzaAdapter.Pizz
     }
 
     @Override
-    public void selectPizza(JSONObject pizza) {
+    public void selectPizza(Pizza pizza) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.main_container, PizzaDetailsFragment.newInstance(pizza), "details")
+                .add(R.id.main_container, PizzaDetailsFragment.newInstance(new Gson().toJson(pizza)), "details")
                 .commit();
     }
 
@@ -68,11 +70,9 @@ public class MainActivity extends AppCompatActivity implements PizzaAdapter.Pizz
     }
 
     private void setupBadge() {
-
         if (cartBadge != null) {
-            if (cartItemCount == 0) {
-                if (cartBadge.getVisibility() != View.GONE) cartBadge.setVisibility(View.GONE);
-            } else {
+            if (cartItemCount == 0 && cartBadge.getVisibility() != View.GONE) cartBadge.setVisibility(View.GONE);
+            else {
                 cartBadge.setText(String.valueOf(Math.min(cartItemCount, 99)));
                 if (cartBadge.getVisibility() != View.VISIBLE)
                     cartBadge.setVisibility(View.VISIBLE);

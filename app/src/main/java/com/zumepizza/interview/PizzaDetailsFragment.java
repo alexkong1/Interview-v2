@@ -21,10 +21,10 @@ import org.json.JSONObject;
 
 public class PizzaDetailsFragment extends Fragment {
 
-    public static PizzaDetailsFragment newInstance(JSONObject pizza) {
+    public static PizzaDetailsFragment newInstance(String pizzaJson) {
         PizzaDetailsFragment fragment = new PizzaDetailsFragment();
         Bundle args = new Bundle();
-        args.putString("pizza", pizza.toString());
+        args.putString("pizza", pizzaJson);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,6 +61,17 @@ public class PizzaDetailsFragment extends Fragment {
                 if (getActivity() != null)
                     root.findViewById(R.id.details_add).setOnClickListener(view ->
                             ((AddPizzaListener) getActivity()).addPizza());
+
+                ((TextView) root.findViewById(R.id.details_name)).setText(pizza.getString("name"));
+
+                if (pizza.optInt("vegetarian", 0) == 1) root.findViewById(R.id.details_veg).setVisibility(View.VISIBLE);
+                else root.findViewById(R.id.details_veg).setVisibility(View.GONE);
+
+                if (pizza.optInt("spicy", 0) == 1) root.findViewById(R.id.details_spicy).setVisibility(View.VISIBLE);
+                else root.findViewById(R.id.details_spicy).setVisibility(View.GONE);
+
+                ((TextView) root.findViewById(R.id.details_name)).setText(pizza.getString("menu_description"));
+
             } catch (JSONException e) {
 
             }

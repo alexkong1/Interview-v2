@@ -54,6 +54,9 @@ public class PizzaAdapter extends StatelessSection {
         return pizzas.size();
     }
 
+    /**
+     * Note: There was no actual field to signify that a pizza is classified as spicy.  Instead I went for gluten-free.
+     */
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         PizzaViewHolder viewHolder = (PizzaViewHolder) holder;

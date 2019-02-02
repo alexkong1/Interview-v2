@@ -19,6 +19,9 @@ import com.zumepizza.interview.model.Pizza;
 
 import java.util.List;
 
+/**
+ * Note: There was no actual field to signify that a pizza is classified as spicy.  Instead I went for gluten-free.
+ */
 public class PizzaDetailsFragment extends Fragment {
 
     public static final String ARGS_PIZZA = "pizza";
@@ -74,6 +77,8 @@ public class PizzaDetailsFragment extends Fragment {
             else root.findViewById(R.id.details_veg).setVisibility(View.GONE);
 
             ((TextView) root.findViewById(R.id.details_description)).setText(pizza.getMenuDescription());
+
+            ((TextView) root.findViewById(R.id.details_price)).setText(String.format(getString(R.string.price), pizza.getPrice()));
         }
     }
 
@@ -90,7 +95,7 @@ public class PizzaDetailsFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(context).inflate(R.layout.item_ingredient, viewGroup, false);
+            View v = LayoutInflater.from(context).inflate(R.layout.item_topping, viewGroup, false);
             return new ViewHolder(v);
         }
 
@@ -100,9 +105,10 @@ public class PizzaDetailsFragment extends Fragment {
 
             Glide.with(context)
                     .load(topping.getAsset().getUrl())
-                    .into(viewHolder.ingredientBackground);
+                    .into(viewHolder.toppingBackground);
 
-            viewHolder.ingredientName.setText(topping.getName());
+            viewHolder.toppingName.setText(topping.getName());
+            viewHolder.toppingDscription.setText(topping.getDescription());
         }
 
         @Override
@@ -113,14 +119,16 @@ public class PizzaDetailsFragment extends Fragment {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ingredientBackground;
-        TextView ingredientName;
+        ImageView toppingBackground;
+        TextView toppingName;
+        TextView toppingDscription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ingredientBackground = itemView.findViewById(R.id.ingredient_background);
-            ingredientName = itemView.findViewById(R.id.ingredient_name);
+            toppingBackground = itemView.findViewById(R.id.topping_image);
+            toppingName = itemView.findViewById(R.id.topping_name);
+            toppingDscription = itemView.findViewById(R.id.topping_description);
         }
     }
 

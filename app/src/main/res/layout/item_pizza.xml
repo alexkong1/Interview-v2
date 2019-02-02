@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:text="PIZZA NAME"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
             android:textSize="24sp" />
 
         <ImageView

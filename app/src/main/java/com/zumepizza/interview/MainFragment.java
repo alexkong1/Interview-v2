@@ -56,7 +56,7 @@ public class MainFragment extends Fragment implements API.ResponseHandler {
 
         SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
 
-        for(String key : response.keySet()) {
+        for (String key : response.keySet()) {
             adapter.addSection(new PizzaAdapter(getContext(),
                     (PizzaAdapter.PizzaSelectionListener) getActivity(), key, response.get(key)));
         }

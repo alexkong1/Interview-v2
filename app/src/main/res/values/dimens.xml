@@ -3,4 +3,5 @@
     <dimen name="pizza_size">120dp</dimen>
     <dimen name="pizza_add_remove_size">60dp</dimen>
     <dimen name="pizza_type_size">32dp</dimen>
+    <dimen name="topping_size">98dp</dimen>
 </resources>
